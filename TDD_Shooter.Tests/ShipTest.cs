@@ -3,6 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
 using TDD_Shooter.Model;
+using Windows.Devices.Bluetooth.Advertisement;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace TDD_Shooter.Tests
@@ -38,6 +39,14 @@ namespace TDD_Shooter.Tests
             Ship ship = new Ship();
             Assert.AreEqual(shipWidth, ship.Width);
             Assert.AreEqual(shipHeight, ship.Height);
+        }
+
+        [UITestMethod]
+        public void ViewModelShip()
+        {
+            ViewModel vm = new ViewModel();
+            Assert.AreEqual(60, vm.Ship.Width);
+            Assert.AreEqual(60, vm.Ship.Height);
         }
 
     }

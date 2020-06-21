@@ -25,6 +25,8 @@ namespace TDD_Shooter
         public MainPage()
         {
             this.InitializeComponent();
+
+            DataContext = new ViewModel();
         }
     }
 }
