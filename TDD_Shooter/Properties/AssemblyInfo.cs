@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: InternalsVisibleTo("TDD_Shooter.Tests")]
 
 // アセンブリのバージョン情報は次の 4 つの値で構成されています:
 //
