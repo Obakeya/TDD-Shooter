@@ -13,7 +13,7 @@ using Windows.ApplicationModel.Payments;
 namespace TDD_Shooter.Tests
 {
     [TestClass]
-    class ShipMoveTest
+    public class ShipMoveTest
     {
         [UITestMethod]
         public void ShipKeyMove()
@@ -24,9 +24,11 @@ namespace TDD_Shooter.Tests
             vm.KeyDown(VirtualKey.Left);
             vm.Tick(2);
             Assert.AreEqual(100 - Ship.Speed * 2, vm.Ship.X);
-            vm.KeyUp(VirtualKey.Left);
             vm.Tick(2);
             Assert.AreEqual(100 - Ship.Speed * 4, vm.Ship.X);
+            vm.KeyUp(VirtualKey.Left);
+            vm.Tick(2);
+
         }
     }
 }
