@@ -8,14 +8,21 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="#FFF6F6F6">
-        <Canvas>
-            <Image Source="{Binding Path=Ship.Source}"
+    <Grid >
+        <Viewbox>
+            <Canvas Width ="{x:Bind Path  = Model.Width}"
+                    Height="{x:Bind Path = Model.Height}">
+                <Image Source="{Binding Path=Back.Source}"
+                   Width="{Binding Path=Back.Width}"
+                   Height="{Binding Path=Back.Height}"
+                   Canvas.Top="{Binding Path=Back.Y}"
+                   Canvas.Left="{Binding Path=Back.X}"/>
+                <Image Source="{Binding Path=Ship.Source}"
                    Width="{Binding Path=Ship.Width}"
                    Height="{Binding Path=Ship.Height}"
                    Canvas.Top="{Binding Path=Ship.Y}"
-                   Canvas.Left="{Binding Path=Ship.X}"
-                   />
-        </Canvas>
+                   Canvas.Left="{Binding Path=Ship.X}"/>
+            </Canvas>
+        </Viewbox>
     </Grid>
 </Page>

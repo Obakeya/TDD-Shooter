@@ -25,6 +25,11 @@ namespace TDD_Shooter
     {
         ViewModel Model;
         DispatcherTimer timer;
+        public static readonly Rect Field = new Rect(0, 0, 643, 800);
+        public double Width {get { return Field.Width; } }
+
+        public double Heigth {get { return Field.Height; } }
+
 
         public MainPage()
         {
