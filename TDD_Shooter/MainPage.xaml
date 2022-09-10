@@ -17,6 +17,11 @@
                    Height="{Binding Path=Back.Height}"
                    Canvas.Top="{Binding Path=Back.Y}"
                    Canvas.Left="{Binding Path=Back.X}"/>
+                <Image Source="{Binding Path=Cloud.Source}"
+                   Width="{Binding Path=Cloud.Width}"
+                   Height="{Binding Path=Cloud.Height}"
+                   Canvas.Top="{Binding Path=Cloud.Y}"
+                   Canvas.Left="{Binding Path=Cloud.X}"/>
                 <Image Source="{Binding Path=Ship.Source}"
                    Width="{Binding Path=Ship.Width}"
                    Height="{Binding Path=Ship.Height}"
