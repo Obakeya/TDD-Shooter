@@ -38,6 +38,7 @@ namespace TDD_Shooter
             DataContext = Model;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
+            Model.AddEnemy(new TDD_Shooter.Model.Enemy(200, 100));
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(20);
