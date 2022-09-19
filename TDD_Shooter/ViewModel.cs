@@ -10,7 +10,9 @@ using Windows.Foundation;
 
 namespace TDD_Shooter
 {
-
+    /// <summary>
+    /// 画面上に表示されるオブジェクトを定義
+    /// </summary>
     class ViewModel
     {
         private Dictionary<VirtualKey, bool> keyMap = new Dictionary<VirtualKey, bool>();
@@ -24,6 +26,10 @@ namespace TDD_Shooter
         private ObservableCollection<Enemy> enemies = new ObservableCollection<Enemy>();
 
         public ObservableCollection<Enemy> Enemies { get { return enemies; } } // 動的に画面上に表示数を変化させる
+
+        private ObservableCollection<Bullet> bullets = new ObservableCollection<Bullet>();
+
+        public ObservableCollection<Bullet> Bullets { get { return bullets; } } // 動的に画面上に表示数を変化させる
 
         public static readonly Rect Field = new Rect(0, 0, 643, 800); //ウィンドウサイズ指定\\
 
@@ -53,6 +59,11 @@ namespace TDD_Shooter
             Enemies.Add(e);
         }
 
+        internal void AddBullet (Bullet b)
+        {
+            Bullets.Add(b);
+        }
+
         internal void Tick (int frame)
         {
             for (int i = 0; i< frame; i++)
@@ -68,6 +79,16 @@ namespace TDD_Shooter
                         Enemies.Remove(e);  //画面の外に出た敵を削除
                     }
                 }
+
+                foreach (Bullet b in Bullets.ToArray())//Bulletsの中身を削除してはダメ
+                {
+                    b.Move();
+                    if (b.Y < -10)
+                    {
+                        Bullets.Remove(b);  //画面の外に出た弾丸を削除
+                    }
+                }
+
 
                 if (keyMap.ContainsKey(VirtualKey.Left) && keyMap[VirtualKey.Left])
                  {
@@ -89,6 +110,13 @@ namespace TDD_Shooter
                     Ship.Move(0, +Ship.Speed);
                 }
 
+                if (keyMap.ContainsKey(VirtualKey.Space) && keyMap[VirtualKey.Space])
+                {
+                    var b = new Bullet(Ship.X + Ship.Width / 2, Ship.Y + Ship.Height / 2);
+                    AddBullet(b);
+                    keyMap[VirtualKey.Space] = false;
+;
+                }
 
             }
         }
