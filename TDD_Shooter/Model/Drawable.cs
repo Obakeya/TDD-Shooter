@@ -5,34 +5,68 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
 using System.ComponentModel;
+using Windows.Foundation;
+using Windows.UI.Composition;
+using Windows.UI.Xaml.Input;
 
 namespace TDD_Shooter.Model
 {
-    class Drawable : INotifyPropertyChanged
+    abstract class Drawable : INotifyPropertyChanged
     {
+        protected Drawable (double w, double h)
+        {
+            Rect.Width = w;
+            Rect.Height = h;
+            IsValid = true;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
-       
+        private void NotifyPropertyChanged(String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        internal abstract void Tick();
+
+        internal virtual bool IsValid { get; set; }
+
         protected double x, y;
 
-        public double X { get { return x; } set { x = value; NotifyPropertyChanged("X"); } } 
+        internal Rect Rect;
 
-        public double Y { get { return y; } set { y = value; NotifyPropertyChanged("Y"); } }
-        
+        public double X
+        {
+            get { return Rect.X; }
+            set { Rect.X = value; NotifyPropertyChanged("X"); }
+        }
+        public double Y
+        {
+            get { return Rect.Y; }
+            set { Rect.Y = value; NotifyPropertyChanged("Y"); }
+        }
+
+
         /// <summary>途中で変化しない</summary>
-        public double Width { get; }
+        public double Width { get { return Rect.Width; } }
         /// <summary>途中で変化しない</summary>
-        public double Height { get; }
+        public double Height { get { return Rect.Width; } }
 
         public double SpeedX { get; set; }
 
         public double SpeedY { get; set; }
 
-        public BitmapImage Source { get; protected set; }
-
-        protected Drawable (double w, double h)
+        /// <summary>アニメーション描写対応</summary>
+        
+        
+        public BitmapImage Source 
         {
-            Width = w; Height = h;
+            get { return source; }  
+            protected set { source = value; NotifyPropertyChanged("Source") ; } 
         }
+
+        private BitmapImage source;
 
         public void Move() 
         {
@@ -40,13 +74,5 @@ namespace TDD_Shooter.Model
             Y += SpeedY;
         }
 
-
-        private void NotifyPropertyChanged (String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this,new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
 }

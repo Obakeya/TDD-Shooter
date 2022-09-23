@@ -17,7 +17,7 @@ namespace TDD_Shooter.Tests
             var vm = new ViewModel();
             //画面の縦サイズ3328からウィンドウの高さ800を引いた2528分上から画像スクロールを始める
             Assert.AreEqual(-2528, vm.Back.Y);
-            vm.Back.Scroll(1);
+            vm.Back.Tick();
             Assert.AreEqual(-2527, vm.Back.Y);
         }
 
@@ -28,10 +28,10 @@ namespace TDD_Shooter.Tests
             var vm = new ViewModel();
             for (var i =0; i < 2528; i++)
             {
-                vm.Back.Scroll(1);
+                vm.Back.Tick();
             }
             Assert.AreEqual(0, vm.Back.Y);
-            vm.Back.Scroll(1);
+            vm.Back.Tick();
             Assert.AreEqual(-2528, vm.Back.Y);
         }
 
@@ -40,7 +40,7 @@ namespace TDD_Shooter.Tests
         {
             var vm = new ViewModel();
             Assert.AreEqual(-2528, vm.Cloud.Y);
-            vm.Cloud.Scroll(2);
+            vm.Cloud.Tick();
             Assert.AreEqual(-2526, vm.Cloud.Y);
         }
 
@@ -50,10 +50,10 @@ namespace TDD_Shooter.Tests
             var vm = new ViewModel();
             for (var i = 0; i < 2528/2; i++)
             {
-                vm.Cloud.Scroll(2);
+                vm.Cloud.Tick();
             }
             Assert.AreEqual(0, vm.Cloud.Y);
-            vm.Cloud.Scroll(2);
+            vm.Cloud.Tick();
             Assert.AreEqual(-2528, vm.Cloud.Y);
         }
 

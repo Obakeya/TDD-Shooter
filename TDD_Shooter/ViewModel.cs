@@ -25,6 +25,11 @@ namespace TDD_Shooter
 
         private ObservableCollection<Drawable> drawables = new ObservableCollection<Drawable>();
 
+        public static readonly Rect Field = new Rect(0, 0, 643, 800); //ウィンドウサイズ指定
+
+        public double Width { get { return Field.Width; } }
+
+        public double Height { get { return Field.Height; } }
 
         public ObservableCollection<Drawable> Drawables
         {
@@ -51,18 +56,22 @@ namespace TDD_Shooter
         } // 動的に画面上に表示数を変化させる
 
 
-
-        public static readonly Rect Field = new Rect(0, 0, 643, 800); //ウィンドウサイズ指定\\
-
-        public double Width { get { return Field.Width; } }
-
-        public double Height { get { return Field.Height; } }
+        public List<Drawable>Blasts
+        {
+            get
+            {
+                var data = Drawables.Where((e) => e is Blast);
+                return data.ToList<Drawable>();
+            }
+        }
 
         internal ViewModel()
         {
             Ship = new Ship();
-            Back = new  Back("ms-appx:///Images/back.png");
+            Back = new Back("ms-appx:///Images/back.png");
+            Back.SpeedY = 1;
             Cloud = new Back("ms-appx:///Images/back_cloud.png");
+            Cloud.SpeedY = 2;
             drawables.Add(Back);
             drawables.Add(Cloud);
             drawables.Add(Ship);
@@ -82,26 +91,14 @@ namespace TDD_Shooter
         {
             return keyMap.ContainsKey(key) && keyMap[key];
         }
-        internal void AddEnemy(Enemy e)
-        {
-            Drawables.Add(e);
-        }
-
-        internal void AddBullet (Bullet b)
-        {
-            Drawables.Add(b);
-        }
+   
 
         internal void Tick (int frame)
         {
             for (int i = 0; i< frame; i++)
             {
-                Back.Scroll(1);
-                Cloud.Scroll(2);
-
                 Ship.SpeedX = 0;
                 Ship.SpeedY = 0;
-
 
                 if (IsKeyDown(VirtualKey.Left))
                 {
@@ -132,11 +129,30 @@ namespace TDD_Shooter
 
                 foreach (Drawable e in Drawables.ToArray())//Drawablesの中身を削除してはダメ
                 {
-                    e.Move();
-                    if(e.Y > Field.Height || e.Y + e.Height < 0 ||
-                       e.X > Field.Width  || e.X + e.Width < 0 )
+                    e.Tick();
+                    var r = e.Rect;
+                    r.Intersect(Field);
+                    if(!e.IsValid || r.IsEmpty)
                     {
                         Drawables.Remove(e);  //画面の外に出た物体を削除
+                    }
+                }
+
+                // 弾丸と敵の衝突判定
+                foreach(Bullet b in Bullets)
+                {
+                    foreach(Enemy e in Enemies)
+                    {
+                        var r = e.Rect;
+                        r.Intersect(b.Rect);
+
+                        if (r != Rect.Empty && b.IsValid && e.IsValid)
+                        {
+                            e.IsValid = false;
+                            b.IsValid = false;
+                            var blast = new Blast(b.X + b.Width / 2, b.Y + b.Height / 2);
+                            Drawables.Add(blast);
+                        }
                     }
                 }
 
@@ -144,6 +160,16 @@ namespace TDD_Shooter
                 Ship.X = Math.Max(0, Math.Min(Field.Width - Ship.Width, Ship.X));
 
             }
+        }
+
+        internal void AddEnemy(Enemy e)
+        {
+            Drawables.Add(e);
+        }
+
+        internal void AddBullet(Bullet b)
+        {
+            Drawables.Add(b);
         }
 
     }
