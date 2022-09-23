@@ -9,37 +9,15 @@ using System.ComponentModel;
 namespace TDD_Shooter.Model
 {
 
-    internal class Bullet : INotifyPropertyChanged
+    internal class Bullet : Drawable
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public double X { get; set; }
-        public double Y { get { return y; } set {y = value; NotifyPropertyChanged("Y"); } }
-        private double y;
-
-        public double Width { get { return 10; } }
-        public double Height { get { return 10; } }
-        public double Speed { get { return -10; } }
-
-        public BitmapImage Source { get; set; }
-
-        internal Bullet (double x, double y)
+        internal Bullet (double x, double y) : base(10,10)
         {
             Source = new BitmapImage(new Uri("ms-appx:///IMages/bullet0.png"));
-            X = x -5; // left
-            Y = y -5; //top
+            X = x - Width / 2;
+            Y = y - Height / 2;
+            SpeedY = -10;
         }
 
-        internal void Move()
-        {
-            Y += Speed;
-        }
-
-        private void NotifyPropertyChanged (String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
 }

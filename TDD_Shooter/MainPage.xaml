@@ -12,46 +12,14 @@
         <Viewbox>
             <Canvas Width ="{x:Bind Path  = Model.Width}"
                     Height="{x:Bind Path = Model.Height}">
-                <Image Source="{Binding Path=Back.Source}"
-                   Width="{Binding Path=Back.Width}"
-                   Height="{Binding Path=Back.Height}"
-                   Canvas.Top="{Binding Path=Back.Y}"
-                   Canvas.Left="{Binding Path=Back.X}"/>
-                <Image Source="{Binding Path=Cloud.Source}"
-                   Width="{Binding Path=Cloud.Width}"
-                   Height="{Binding Path=Cloud.Height}"
-                   Canvas.Top="{Binding Path=Cloud.Y}"
-                   Canvas.Left="{Binding Path=Cloud.X}"/>
-                <Image Source="{Binding Path=Ship.Source}"
-                   Width="{Binding Path=Ship.Width}"
-                   Height="{Binding Path=Ship.Height}"
-                   Canvas.Top="{Binding Path=Ship.Y}"
-                   Canvas.Left="{Binding Path=Ship.X}"/>
 
-                <ItemsControl ItemsSource="{Binding Path=Enemies}">
+                <ItemsControl ItemsSource="{Binding Path=Drawables}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas/><!--コントロールを含むパネル-->
+                            <Canvas/>
+                            <!--コントロールを含むパネル-->
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Source}"
-                                   Width="{Binding Width}" Height="{Binding Height}">
-                                <Image.RenderTransform>
-                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>   <!--個々のコントロール-->
-                                </Image.RenderTransform>
-                            </Image>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl ItemsSource="{Binding Path=Bullets}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas/>
-                                <!--コントロールを含むパネル-->
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Image Source="{Binding Source}"

@@ -23,9 +23,9 @@ namespace TDD_Shooter.Tests
             Assert.AreEqual(100, enemy.X);
             Assert.AreEqual(-50, enemy.Y);
             vm.Tick(1); //最初の敵は下に移動するだけ
-            Assert.AreEqual(-50 + enemy.Speed, enemy.Y);
+            Assert.AreEqual(-50 + enemy.SpeedY, enemy.Y);
             Assert.AreEqual(vm.Enemies.Count, 1);
-            var nFrame = (int)(ViewModel.Field.Height / enemy.Speed) + 10;
+            var nFrame = (int)(ViewModel.Field.Height / enemy.SpeedY) + 10;
             vm.Tick(nFrame);
             Assert.AreEqual(vm.Enemies.Count, 0);
         }

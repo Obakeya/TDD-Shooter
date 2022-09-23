@@ -39,7 +39,7 @@ namespace TDD_Shooter.Tests
             var yPrev = b.Y;
             vm.Tick(1);
             Assert.AreEqual(xPrev, b.X);
-            Assert.AreEqual(yPrev + b.Speed, b.Y);
+            Assert.AreEqual(yPrev + b.SpeedY, b.Y);
         }
 
         [UITestMethod]

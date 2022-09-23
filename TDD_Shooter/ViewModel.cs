@@ -23,13 +23,34 @@ namespace TDD_Shooter
 
         public Back Cloud { get; set; }
 
-        private ObservableCollection<Enemy> enemies = new ObservableCollection<Enemy>();
+        private ObservableCollection<Drawable> drawables = new ObservableCollection<Drawable>();
 
-        public ObservableCollection<Enemy> Enemies { get { return enemies; } } // 動的に画面上に表示数を変化させる
 
-        private ObservableCollection<Bullet> bullets = new ObservableCollection<Bullet>();
+        public ObservableCollection<Drawable> Drawables
+        {
+            get { return drawables; }
 
-        public ObservableCollection<Bullet> Bullets { get { return bullets; } } // 動的に画面上に表示数を変化させる
+        }
+
+        public List<Drawable> Enemies 
+        {
+            get {
+                IEnumerable<Drawable> data = Drawables.Where(e => e is Enemy);
+                return data.ToList<Drawable>(); 
+               }
+        } // 動的に画面上に表示数を変化させる
+
+
+        public List<Drawable> Bullets
+        {
+            get
+            {
+                IEnumerable<Drawable> data = Drawables.Where(e => e is Bullet);
+                return data.ToList<Drawable>();
+            }
+        } // 動的に画面上に表示数を変化させる
+
+
 
         public static readonly Rect Field = new Rect(0, 0, 643, 800); //ウィンドウサイズ指定\\
 
@@ -42,6 +63,9 @@ namespace TDD_Shooter
             Ship = new Ship();
             Back = new  Back("ms-appx:///Images/back.png");
             Cloud = new Back("ms-appx:///Images/back_cloud.png");
+            drawables.Add(Back);
+            drawables.Add(Cloud);
+            drawables.Add(Ship);
         }
 
         internal void KeyDown(VirtualKey key)
@@ -54,14 +78,18 @@ namespace TDD_Shooter
             keyMap[key] = false;
         }
 
+        private Boolean IsKeyDown (VirtualKey key)
+        {
+            return keyMap.ContainsKey(key) && keyMap[key];
+        }
         internal void AddEnemy(Enemy e)
         {
-            Enemies.Add(e);
+            Drawables.Add(e);
         }
 
         internal void AddBullet (Bullet b)
         {
-            Bullets.Add(b);
+            Drawables.Add(b);
         }
 
         internal void Tick (int frame)
@@ -71,52 +99,49 @@ namespace TDD_Shooter
                 Back.Scroll(1);
                 Cloud.Scroll(2);
 
-                foreach (Enemy e in Enemies.ToArray())//Enemiesの中身を削除してはダメ
+                Ship.SpeedX = 0;
+                Ship.SpeedY = 0;
+
+
+                if (IsKeyDown(VirtualKey.Left))
                 {
-                    e.Move();
-                    if(e.Y > Field.Height)
-                    {
-                        Enemies.Remove(e);  //画面の外に出た敵を削除
-                    }
+                    Ship.SpeedX = -Ship.Speed;
                 }
 
-                foreach (Bullet b in Bullets.ToArray())//Bulletsの中身を削除してはダメ
+                if (IsKeyDown(VirtualKey.Right))
                 {
-                    b.Move();
-                    if (b.Y < -10)
-                    {
-                        Bullets.Remove(b);  //画面の外に出た弾丸を削除
-                    }
+                    Ship.SpeedX = Ship.Speed;
                 }
 
-
-                if (keyMap.ContainsKey(VirtualKey.Left) && keyMap[VirtualKey.Left])
-                 {
-                    Ship.Move(-Ship.Speed, 0);
-                 }
-
-                if(keyMap.ContainsKey(VirtualKey.Right) && keyMap[VirtualKey.Right])
+                if (IsKeyDown(VirtualKey.Up))
                 {
-                    Ship.Move(+Ship.Speed, 0);
+                    Ship.SpeedY = -Ship.Speed;
                 }
 
-                if (keyMap.ContainsKey(VirtualKey.Up) && keyMap[VirtualKey.Up])
+                if (IsKeyDown(VirtualKey.Down))
                 {
-                    Ship.Move(0, -Ship.Speed);
+                    Ship.SpeedY = Ship.Speed;
                 }
 
-                if(keyMap.ContainsKey(VirtualKey.Down) && keyMap[VirtualKey.Down])
-                {
-                    Ship.Move(0, +Ship.Speed);
-                }
-
-                if (keyMap.ContainsKey(VirtualKey.Space) && keyMap[VirtualKey.Space])
+                if (IsKeyDown(VirtualKey.Space))
                 {
                     var b = new Bullet(Ship.X + Ship.Width / 2, Ship.Y + Ship.Height / 2);
                     AddBullet(b);
                     keyMap[VirtualKey.Space] = false;
-;
                 }
+
+                foreach (Drawable e in Drawables.ToArray())//Drawablesの中身を削除してはダメ
+                {
+                    e.Move();
+                    if(e.Y > Field.Height || e.Y + e.Height < 0 ||
+                       e.X > Field.Width  || e.X + e.Width < 0 )
+                    {
+                        Drawables.Remove(e);  //画面の外に出た物体を削除
+                    }
+                }
+
+                Ship.Y = Math.Max(0, Math.Min(Field.Height - Ship.Height, Ship.Y));//画面から実機がでないようにする
+                Ship.X = Math.Max(0, Math.Min(Field.Width - Ship.Width, Ship.X));
 
             }
         }

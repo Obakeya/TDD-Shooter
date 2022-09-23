@@ -21,13 +21,28 @@ namespace TDD_Shooter.Tests
             ViewModel vm = new ViewModel();
             vm.Ship.X = 100;
             vm.Ship.Y = 100;
+
             vm.KeyDown(VirtualKey.Left);
-            vm.Tick(2);
-            Assert.AreEqual(100 - Ship.Speed * 2, vm.Ship.X);
-            vm.Tick(2);
-            Assert.AreEqual(100 - Ship.Speed * 4, vm.Ship.X);
+            vm.Tick(1000); 
+            Assert.IsTrue(vm.Ship.X >= 0); ///キーを押し続けても画面上に残るか
             vm.KeyUp(VirtualKey.Left);
-            vm.Tick(2);
+
+
+            vm.KeyUp(VirtualKey.Right);
+            vm.Tick(1000);
+            Assert.IsTrue(vm.Ship.X + vm.Ship.Width <= ViewModel.Field.Width) ;
+            vm.KeyUp(VirtualKey.Right);
+
+            vm.KeyUp(VirtualKey.Up);
+            vm.Tick(1000);
+            Assert.IsTrue(vm.Ship.Y >=0);
+            vm.KeyUp(VirtualKey.Up);
+
+            vm.KeyDown(VirtualKey.Down);
+            vm.Tick(1000);
+            Assert.IsTrue(vm.Ship.Y + vm.Ship.Height <= ViewModel.Field.Height);
+            vm.KeyUp(VirtualKey.Down);
+
 
         }
     }
