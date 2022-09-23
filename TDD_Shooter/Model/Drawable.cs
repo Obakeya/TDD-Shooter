@@ -51,7 +51,7 @@ namespace TDD_Shooter.Model
         /// <summary>途中で変化しない</summary>
         public double Width { get { return Rect.Width; } }
         /// <summary>途中で変化しない</summary>
-        public double Height { get { return Rect.Width; } }
+        public double Height { get { return Rect.Height; } }
 
         public double SpeedX { get; set; }
 
