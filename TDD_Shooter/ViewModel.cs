@@ -46,7 +46,7 @@ namespace TDD_Shooter
         }
 
         /// <summary>動的に画面上での表示数を変化させる </summary>
-        public List<Drawable> Enemies  {get { return Filter<Enemy>(); }}
+        public List<Drawable> Enemies  {get { return Filter<AbstractEnemy>(); }}
         /// <summary>動的に画面上での表示数を変化させる </summary>
         public List<Drawable> Bullets{get{return Filter<Bullet>();}} 
         /// <summary>動的に画面上での表示数を変化させる </summary>
@@ -127,9 +127,9 @@ namespace TDD_Shooter
                     if(!e.IsValid || r.IsEmpty)
                         Drawables.Remove(e);  //画面の外に出た物体を削除
                     
-                    if(e is Enemy)
+                    if(e is AbstractEnemy)
                     {
-                        var enemy = (Enemy)e;
+                        var enemy = (AbstractEnemy)e;
                         if (enemy.IsFire)
                             CreateEnemyBullet(enemy);
 
@@ -168,7 +168,7 @@ namespace TDD_Shooter
                         continue;
                     }
 
-                    foreach (Enemy e in Enemies)
+                    foreach (AbstractEnemy e in Enemies)
                     {
                         var r = e.Rect;
                         r.Intersect(b.Rect);
@@ -188,7 +188,7 @@ namespace TDD_Shooter
             }
         }
 
-        internal void AddEnemy(Enemy e)
+        internal void AddEnemy(AbstractEnemy e)
         {
             Drawables.Add(e);
         }
@@ -198,7 +198,7 @@ namespace TDD_Shooter
             Drawables.Add(b);
         }
 
-        private void CreateEnemyBullet(Enemy e)
+        private void CreateEnemyBullet(AbstractEnemy e)
         {
             var sX = e.X + e.Width / 2;
             var sY = e.Y + e.Height / 2;

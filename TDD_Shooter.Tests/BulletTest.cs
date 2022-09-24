@@ -76,7 +76,7 @@ namespace TDD_Shooter.Tests
             vm.Ship.X = 300 - vm.Ship.Width / 2;
             vm.Ship.Y = 300;
 
-            var enemy = new Enemy(300, 0);
+            var enemy = new Enemy0(300, 0);
             enemy.X -= enemy.Width / 2;
             vm.AddEnemy(enemy);
             vm.Tick(19);
@@ -86,7 +86,7 @@ namespace TDD_Shooter.Tests
             Assert.AreEqual(1, vm.Bullets.Count);
 
             var b = (Bullet)vm.Bullets[0];
-            var e = (Enemy)vm.Enemies[0];
+            var e = (Enemy0)vm.Enemies[0];
 
             Assert.AreEqual(b.X + b.Width / 2 - 5, e.X + e.Width / 2);
             Assert.AreEqual(b.Y + b.Height / 2 - 5, e.Y + e.Height / 2);

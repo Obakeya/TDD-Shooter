@@ -41,7 +41,7 @@ namespace TDD_Shooter
             DataContext = Model;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
-            Model.AddEnemy(new TDD_Shooter.Model.Enemy(200, 100));
+            Model.AddEnemy(new TDD_Shooter.Model.Enemy0(200, 100));
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(20);
@@ -49,8 +49,8 @@ namespace TDD_Shooter
             timer.Start();
 
             Model.Message.Text = "GET READY...";
-            Model.AddEnemy(new Enemy(300, 0));
-            Model.AddEnemy(new Enemy(500, -50));
+            Model.AddEnemy(new Enemy1(300, 0));
+            Model.AddEnemy(new Enemy1(500, -50));
             Model.Ship.X = 300;
             Model.Ship.Y = 700;
         }

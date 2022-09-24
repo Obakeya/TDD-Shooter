@@ -8,26 +8,25 @@ using System.ComponentModel;
 
 namespace TDD_Shooter.Model
 {
-    internal class Enemy : Drawable
+    internal class Enemy1 : AbstractEnemy
     {
-        private int count = 0;
-
-        internal Enemy (double x, double y) : base(50,50)
+        internal Enemy1 (double x, double y) : base(50,50)
         {
-            Source = new BitmapImage(new Uri("ms-appx:///IMages/enemy0_0.png"));
+            Source = new BitmapImage(new Uri("ms-appx:///IMages/enemy1.png"));
             X = x;
             Y = y;
-            SpeedY = 5;
+            SpeedY = 20;
         }
 
         public override void Tick()
         {
+            SpeedY -= 0.5;
             Y += SpeedY;
         }
 
-        internal bool IsFire
+        internal override bool IsFire
         {
-            get { return ++count == 20; }
+            get { return SpeedY == 0; }
         }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.AppContainer;
 using TDD_Shooter.Model;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.UI.Xaml.Media.Imaging;
 
@@ -18,7 +19,7 @@ namespace TDD_Shooter.Tests
             var vm = new ViewModel();
             Assert.AreEqual(vm.Enemies.Count, 0);
 
-            var enemy = new Enemy(100, -50);
+            var enemy = new Enemy0(100, -50);
             vm.AddEnemy(enemy);　//敵は複数登場する
             Assert.AreEqual(vm.Enemies.Count, 1);
             Assert.AreEqual(100, enemy.X);
@@ -38,7 +39,7 @@ namespace TDD_Shooter.Tests
             vm.Ship.X = 300;
             vm.Ship.Y = 300;
 
-            var enemy = new Enemy(300, 0);
+            var enemy = new Enemy0(300, 0);
             vm.AddEnemy(enemy);
 
             vm.KeyDown(Windows.System.VirtualKey.Space);
@@ -60,6 +61,43 @@ namespace TDD_Shooter.Tests
 
             vm.Tick(10);
             Assert.AreEqual(0, vm.Blasts.Count);
+        }
+
+        [UITestMethod]
+        public void Enemy1Movement()
+        {
+            var vm = new ViewModel();
+            var e = new Enemy1(200, 0);
+            vm.AddEnemy(e);
+
+            Assert.AreEqual(vm.Enemies.Count, 1);
+            Assert.AreEqual(200, e.X);
+            Assert.AreEqual(0, e.Y);
+            Assert.AreEqual(vm.Bullets.Count, 0);
+
+            double prevX = e.X, prevY = e.Y, prevS = e.SpeedY;
+            for (var i = 0; i < 40; i++)
+            {
+                vm.Tick(1);
+                Assert.AreEqual(prevX, e.X);
+                Assert.IsTrue(prevY <= e.Y);
+                Assert.AreEqual(prevS - 0.5, e.SpeedY);
+                prevX = e.X;
+                prevY = e.Y;
+                prevS = e.SpeedY;
+            }
+
+            Assert.AreEqual(vm.Bullets.Count, 1);
+            for(var i =0; i<40; i++)
+            {
+                vm.Tick(1);
+                Assert.AreEqual(prevX, e.X);
+                Assert.IsTrue(prevY > e.Y);
+                Assert.AreEqual(prevS - 0.5, e.SpeedY);
+                prevX = e.X;
+                prevY = e.Y;
+                prevS = e.SpeedY;
+            }
 
 
         }
