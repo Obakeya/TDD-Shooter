@@ -10,6 +10,8 @@ namespace TDD_Shooter.Model
 {
     internal class Enemy : Drawable
     {
+        private int count = 0;
+
         internal Enemy (double x, double y) : base(50,50)
         {
             Source = new BitmapImage(new Uri("ms-appx:///IMages/enemy0_0.png"));
@@ -21,6 +23,11 @@ namespace TDD_Shooter.Model
         internal override void Tick()
         {
             Y += SpeedY;
+        }
+
+        internal bool IsFire
+        {
+            get { return ++count == 20; }
         }
     }
 }
