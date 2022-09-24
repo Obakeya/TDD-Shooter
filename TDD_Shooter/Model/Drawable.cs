@@ -72,6 +72,16 @@ namespace TDD_Shooter.Model
 
         private BitmapImage source;
 
+        private double theta = 0;
+        public virtual double Theta
+        {
+            get { return theta; }
+            set { theta = value; NotifyPropertyChanged("Theta"); }
+        }
+
+        public double CenterX { get { return Width / 2; } }
+        public double CenteY { get { return Height / 2; } }
+
         public void Move() 
         {
             X += SpeedX;

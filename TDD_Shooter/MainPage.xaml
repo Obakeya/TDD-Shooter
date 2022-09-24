@@ -26,8 +26,13 @@
                             <Image Source="{Binding Source}"
                                    Width="{Binding Width}" Height="{Binding Height}">
                                 <Image.RenderTransform>
-                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
-                                    <!--個々のコントロール-->
+                                        <TransformGroup>
+                                            <RotateTransform Angle="{Binding Theta}"
+                                                         CenterX="{Binding CenterX}"
+                                                         CenterY="{Binding CenterY}"/>
+                                            <TranslateTransform X="{Binding X}" Y="{Binding Y}"/>
+                                        </TransformGroup>
+                                        <!--個々のコントロール-->
                                 </Image.RenderTransform>
                             </Image>
                         </DataTemplate>
