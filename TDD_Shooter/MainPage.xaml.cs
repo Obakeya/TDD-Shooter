@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
+using TDD_Shooter.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
@@ -25,6 +27,12 @@ namespace TDD_Shooter
     {
         ViewModel Model;
         DispatcherTimer timer;
+        private int count = 0;
+        public static readonly Rect Field = new Rect(0, 0, 643, 800);
+        public double Width {get { return Field.Width; } }
+
+        public double Heigth {get { return Field.Height; } }
+
 
         public MainPage()
         {
@@ -33,15 +41,27 @@ namespace TDD_Shooter
             DataContext = Model;
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Window.Current.CoreWindow.KeyUp += CoreWindow_KeyUp;
+            Model.AddEnemy(new TDD_Shooter.Model.Enemy0(200, 100));
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Tick += Tick;
             timer.Start();
+
+            Model.Message.Text = "GET READY...";
+            Model.AddEnemy(new Enemy1(300, 0));
+            Model.AddEnemy(new Enemy1(500, -50));
+            Model.AddEnemy(new Enemy2(300, 0, -2, 8, 0.5));
+            Model.AddEnemy(new Enemy2(350, 0, 2, 8, -0.5));
+            Model.Ship.X = 300;
+            Model.Ship.Y = 700;
         }
 
         private void Tick(object sender , object e)
         {
+            if (++count == 50)
+                Model.Message.Text = "";
+
             Model.Tick(1);
         }
 

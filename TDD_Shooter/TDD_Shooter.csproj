@@ -11,7 +11,7 @@
     <AssemblyName>TDD_Shooter</AssemblyName>
     <DefaultLanguage>ja-JP</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -122,6 +122,16 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AbstractEnemy.cs" />
+    <Compile Include="Model\Enemy2.cs" />
+    <Compile Include="Model\Enemy1.cs" />
+    <Compile Include="Model\IClock.cs" />
+    <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\Blast.cs" />
+    <Compile Include="Model\Drawable.cs" />
+    <Compile Include="Model\Bullet.cs" />
+    <Compile Include="Model\Enemy0.cs" />
+    <Compile Include="Model\Back.cs" />
     <Compile Include="Model\Ship.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel.cs" />

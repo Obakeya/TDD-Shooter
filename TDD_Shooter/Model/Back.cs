@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Media.Imaging;
+using System.ComponentModel;
 
 namespace TDD_Shooter.Model
 {
-    class Ship : Drawable
+    class Back : Drawable
     {
-        public static readonly double Speed = 10;
-
-        internal Ship() : base(60,60)
+        internal Back(String source):base(632,3328)
         {
-            Source = new BitmapImage(new Uri("ms-appx:///Images/ship.png"));
+            Source = new BitmapImage(new Uri(source));
+            Y = -2528;
         }
 
         public override void Tick()
         {
-            X += SpeedX;
             Y += SpeedY;
+            if(Y > 0)
+            {
+                Y = -2528; 
+            }
+
         }
 
     }
