@@ -67,7 +67,34 @@ namespace TDD_Shooter.Tests
             vm.Tick(100);
             Assert.AreEqual(0, vm.Bullets.Count);
         }
-    
+
+        [UITestMethod]
+        ///<summary>敵が上部にいて自機が真下にいる状態。敵の弾に自機が当たれば自機は消滅</summary>
+        public void EnemyShootBullet()
+        {
+            var vm = new ViewModel();
+            vm.Ship.X = 300 - vm.Ship.Width / 2;
+            vm.Ship.Y = 300;
+
+            var enemy = new Enemy(300, 0);
+            enemy.X -= enemy.Width / 2;
+            vm.AddEnemy(enemy);
+            vm.Tick(19);
+
+            Assert.AreEqual(0, vm.Bullets.Count);
+            vm.Tick(1);
+            Assert.AreEqual(1, vm.Bullets.Count);
+
+            var b = (Bullet)vm.Bullets[0];
+            var e = (Enemy)vm.Enemies[0];
+
+            Assert.AreEqual(b.X + b.Width / 2 - 5, e.X + e.Width / 2);
+            Assert.AreEqual(b.Y + b.Height / 2 - 5, e.Y + e.Height / 2);
+
+            Assert.IsTrue(vm.Ship.IsValid);
+            vm.Tick(20);
+            Assert.IsFalse(vm.Ship.IsValid);
+        }
 
     }
 }
