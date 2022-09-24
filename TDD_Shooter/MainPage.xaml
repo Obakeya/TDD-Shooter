@@ -10,6 +10,7 @@
 
     <Grid >
         <Viewbox>
+            <Grid>
             <Canvas Width ="{x:Bind Path  = Model.Width}"
                     Height="{x:Bind Path = Model.Height}">
 
@@ -33,6 +34,13 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Canvas>
+                <TextBlock FontSize="50" Foreground= "Yellow"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Opacity="{Binding Path=Message.Alpha}"
+                           Text="{Binding Path=Message.Text}">
+                    </TextBlock>
+            </Grid>
         </Viewbox>
     </Grid>
 </Page>

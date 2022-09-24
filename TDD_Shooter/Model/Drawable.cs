@@ -11,8 +11,15 @@ using Windows.UI.Xaml.Input;
 
 namespace TDD_Shooter.Model
 {
-    abstract class Drawable : INotifyPropertyChanged
+    abstract class Drawable : INotifyPropertyChanged,IClock
     {
+        abstract public void Tick();
+
+        protected bool isValid;
+        /// <summary>プロパティ変化を受信する </summary>
+        public virtual bool IsValid { get { return isValid; } set { isValid = value; NotifyPropertyChanged("IsValid"); } }
+
+
         protected Drawable (double w, double h)
         {
             Rect.Width = w;
@@ -28,10 +35,7 @@ namespace TDD_Shooter.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        internal abstract void Tick();
-
-        internal virtual bool IsValid { get; set; }
-
+        
         protected double x, y;
 
         internal Rect Rect;

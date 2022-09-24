@@ -20,7 +20,7 @@ namespace TDD_Shooter.Model
             SpeedY = 5;
         }
 
-        internal override void Tick()
+        public override void Tick()
         {
             Y += SpeedY;
         }

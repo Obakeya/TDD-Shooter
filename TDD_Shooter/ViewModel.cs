@@ -52,8 +52,12 @@ namespace TDD_Shooter
         /// <summary>動的に画面上での表示数を変化させる </summary>
         public List<Drawable>Blasts{get { return Filter<Blast>(); }}
 
+        public Message Message { get; set; }
+
         internal ViewModel()
         {
+            Message = new Message();
+            Message.Text = "PUSH SPACE TO START";
             Ship = new Ship();
             Back = new Back("ms-appx:///Images/back.png");
             Back.SpeedY = 1;
@@ -114,6 +118,7 @@ namespace TDD_Shooter
                     keyMap[VirtualKey.Space] = false;
                 }
 
+                Message.Tick();
                 foreach (Drawable e in Drawables.ToArray())//Drawablesの中身を削除してはダメ
                 {
                     e.Tick();
@@ -132,6 +137,13 @@ namespace TDD_Shooter
                         r.Intersect(Ship.Rect);
                         if (r != Rect.Empty)
                             Ship.IsValid = false;
+
+                        if(Crash(e,Ship))
+                        {
+                            Ship.IsValid = false;
+                            Message.Text = "GAME OVER";
+                        }
+
                     }
 
                 }
@@ -146,6 +158,13 @@ namespace TDD_Shooter
                         if (r != Rect.Empty)
                             Ship.IsValid = false;
                         
+                        if(Crash(b,Ship))
+                        {
+                            Ship.IsValid = false;
+                            Message.Text = "GAME OVER";
+                        }
+
+
                         continue;
                     }
 
